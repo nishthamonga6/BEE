@@ -1,0 +1,53 @@
+
+
+test> use g13
+switched to db g13
+g13> db.students.insertMany([
+...   { name: "Alice", age: 22, city: "New York" },
+...   { name: "Bob", age: 25, city: "Los Angeles" },
+...   { name: "Charlie", age: 30, city: "Chicago" }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('67c06c13e2d142af6379a1b6'),
+    '1': ObjectId('67c06c13e2d142af6379a1b7'),
+    '2': ObjectId('67c06c13e2d142af6379a1b8')
+  }
+}
+g13> db.students.updateOne(
+...   { name: "Alice" },  // Filter
+...   { $set: { age: 23 } } // Update operation
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+g13> db.students.updateMany(
+...   {},  // Empty filter updates all documents
+...   { $inc: { age: 1 } } // Increment age by 1
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+g13> db.students.replaceOne(
+...   { name: "Bob" }, // Filter
+...   { name: "Robert", age: 28, city: "San Francisco" } // New document (entire replacement)
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+g13> db.students.deleteOne({ name: "Charlie" })
+{ acknowledged: true, deletedCount: 1 }
+g13>
